@@ -1,0 +1,9 @@
+{
+    "pathToFiles": "/home/vagrant/proyects/compassion/pdfs",
+    "cropWidth": "200",
+    "cropHeight": "80",
+    "cropOffsetX": "700",
+    "cropOffsetY": "30",
+    "contrast": "15",
+    "directory_separator": "/"
+}
