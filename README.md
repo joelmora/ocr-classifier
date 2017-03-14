@@ -1,4 +1,4 @@
-## What the project do?##
+## What the project do? ##
 
 The class is used to **classify** letters according to its type. Every letter is stored in a pdf file and has its code _(TID)_ in the header of the file:
 
@@ -21,11 +21,11 @@ The logic behind the code is:
 4. Finally, you will have a folder for each type of letter, and inside this folder you will have the **pdf** files.
 
 
-## Installation instructions [Linux]:##
+## Installation instructions [Linux]: ##
 
 Class was made in plain `PHP` but some external libraries are **required** to work properly.
 
-###1. Install External Libraries:###
+### 1. Install External Libraries: ###
 
 Open your terminal and use `apt-get` to install the following packages:
 
@@ -38,7 +38,7 @@ Open your terminal and use `apt-get` to install the following packages:
 
 
 
-###2.  Configure your project###
+### 2.  Configure your project ###
 
 You **MUST** set the `pathToFiles` parameter stored in you `config.json` file.
 
@@ -46,13 +46,13 @@ You **MUST** set the `pathToFiles` parameter stored in you `config.json` file.
 "pathToFiles": "/home/[PROYECT_FOLDER]/pdfs"
 ```
 
-###3.  Place the pdf files:###
+### 3.  Place the pdf files: ###
 
 Place the pdfs that you want to classify inside the folder configured in the previous step
 
 _(A couple of pdfs were provided for testing purpose)_
 
-###4.  Run the project:###
+### 4.  Run the project: ###
 
 Inside the project folder type the following command to run the class.
 
