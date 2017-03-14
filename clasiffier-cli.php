@@ -28,7 +28,6 @@ class Clasiffier
         $this->contrast = $config->contrast;
         $this->acceptedCharacters = $this->whitelistOCR(range('A','Z'), range('0','9'), '-:');
         $this->DS = $config->directory_separator;
-        $this->gsCmd = $config->ghostscript_cmd;
 
         $this->init();
     }
@@ -90,46 +89,48 @@ class Clasiffier
             $tidMatch = array();
 
             //find TID code
-            if (preg_match('/\w{2}-(\w)-\w{4}-\w/', $line, $tidMatch) === 1) {
+            if (preg_match('/\w{2}-(\w)-\w{4}-\w/', $line, $tidMatch) !== 1) {
+                continue;
+            }
 
-                switch ($tidMatch[1]) {
-                    //long
-                    case 'B':
-                        $type = 'B-first';
-                        $this->writeFileOnFolder($fullPathPdf, $filename, $type);
-                        break;
-                    
-                    //long
-                    case 'E':
-                        $type = 'E-long';
-                        $this->writeFileOnFolder($fullPathPdf, $filename, $type);
-                        break;
+            $type = $tidMatch[1];
 
-                    //short
-                    case 'D':
-                        $type = 'D-short';
-                        $this->writeFileOnFolder($fullPathPdf, $filename, $type);
-                        break;
+            switch ($type) {
+                //long
+                case 'B':
+                    $type = 'B-first';
+                    $this->writeFileOnFolder($fullPathPdf, $filename, $type);
+                    break;
 
-                    //final
-                    case 'F':
-                        $type = 'F-long';
-                        $this->writeFileOnFolder($fullPathPdf, $filename, $type);
-                        break;
+                //long
+                case 'E':
+                    $type = 'E-long';
+                    $this->writeFileOnFolder($fullPathPdf, $filename, $type);
+                    break;
 
-                    //unknown
-                    default:
-                        $type = 'Unclasiffied';
-                        $this->writeFileOnFolder($fullPathPdf, $filename, $type);
-                        break;
-                }
-            } else {
+                 //short
+                case 'D':
+                    $type = 'D-short';
+                    $this->writeFileOnFolder($fullPathPdf, $filename, $type);
+                    break;
+
+                 //final
+                case 'F':
+                    $type = 'F-long';
+                    $this->writeFileOnFolder($fullPathPdf, $filename, $type);
+                    break;
+
+                //unknown
+                default:
+                    $type = 'Unclasiffied';
+                    $this->writeFileOnFolder($fullPathPdf, $filename, $type);
+                    break;
             }
         }
 
-       //delete jpgs
-       unlink($fullPathJpg);
-       unlink($fullPathCroppedJpg);
+        //delete jpgs
+        unlink($fullPathJpg);
+        unlink($fullPathCroppedJpg);
     }
 
     /**
@@ -173,7 +174,7 @@ class Clasiffier
      * @param $subFolder
      * @author Joel Mora
      */
-    public function writeFileOnFolder($fullPathPdf, $filename, $subFolder)
+    private function writeFileOnFolder($fullPathPdf, $filename, $subFolder)
     {
         @mkdir($this->getFullPath($subFolder));
         @rename($fullPathPdf, $this->pathToFiles . $this->DS . $subFolder . $this->DS . $filename . '.pdf');
